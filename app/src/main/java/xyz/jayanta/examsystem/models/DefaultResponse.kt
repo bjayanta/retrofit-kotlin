@@ -1,11 +1,13 @@
 package xyz.jayanta.examsystem.models
 
+import com.google.gson.annotations.SerializedName
+
 data class DefaultResponse (
-    val success: String,
-    val error: String
+    @SerializedName("success") var success: ArrayList<SuccessResponse>,
+    val error: Boolean
 )
 
-data class SuccessList(
+data class SuccessResponse(
     val token: String,
     val name: String
 )

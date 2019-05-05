@@ -51,12 +51,16 @@ class Signup : AppCompatActivity() {
             .enqueue(object: Callback<DefaultResponse>{
                 override fun onFailure(call: Call<DefaultResponse>, t: Throwable) {
                     Toast.makeText(applicationContext, t.message, Toast.LENGTH_LONG).show()
+
                     println(t.message)
                 }
 
                 override fun onResponse(call: Call<DefaultResponse>, response: Response<DefaultResponse>) {
-                    Toast.makeText(applicationContext, response.body()?.success, Toast.LENGTH_LONG).show()
-                    println(response.body()?.success.toString())
+                    Toast.makeText(applicationContext, response.body()?.success.toString(), Toast.LENGTH_LONG).show()
+
+                    println("Response: ")
+                    println("Error: " + response.body()?.error.toString())
+                    println("Success: " + response.body()?.success)
                 }
 
             })
