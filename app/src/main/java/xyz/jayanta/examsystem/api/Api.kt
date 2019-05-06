@@ -4,7 +4,7 @@ import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
-import xyz.jayanta.examsystem.models.DefaultResponse
+import xyz.jayanta.examsystem.models.SignupResponse
 
 interface Api {
 
@@ -17,7 +17,7 @@ interface Api {
         @Field("username") username: String,
         @Field("password") password: String,
         @Field("cpassword") cpassword: String
-    ) :Call<DefaultResponse>
+    ) :Call<SignupResponse>
 
 
 }

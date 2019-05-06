@@ -11,7 +11,9 @@ import retrofit2.Callback
 import retrofit2.Response
 import xyz.jayanta.examsystem.R
 import xyz.jayanta.examsystem.api.RetrofitClient
-import xyz.jayanta.examsystem.models.DefaultResponse
+import xyz.jayanta.examsystem.models.SignupResponse
+
+
 
 /**
  * Sign Up Activity
@@ -50,19 +52,30 @@ class Signup : AppCompatActivity() {
         val cpassword = password_in.text.toString().trim()
 
         RetrofitClient.instance.createUser(name, phone, email, username, password, cpassword)
-            .enqueue(object: Callback<DefaultResponse>{
-                override fun onFailure(call: Call<DefaultResponse>, t: Throwable) {
+            .enqueue(object: Callback<SignupResponse>{
+                override fun onFailure(call: Call<SignupResponse>, t: Throwable) {
                     Toast.makeText(applicationContext, t.message, Toast.LENGTH_LONG).show()
 
                     println(t.message)
                 }
 
-                override fun onResponse(call: Call<DefaultResponse>, response: Response<DefaultResponse>) {
-                    Toast.makeText(applicationContext, response.body()?.success.toString(), Toast.LENGTH_LONG).show()
+                override fun onResponse(call: Call<SignupResponse>, response: Response<SignupResponse>) {
 
-                    println("Response: ")
-                    println("Error: " + response.body()?.error.toString())
+                    if(response.isSuccessful()) {
+                        Toast.makeText(applicationContext, "Response: " + response.body()?.message, Toast.LENGTH_LONG).show()
+                    } else {
+                        // val error = ErrorUtils.parseError(response)
+                    }
+
+                    println("Response: " + response.code())
+                    println("Message: " + response.body()?.message)
                     println("Success: " + response.body()?.success)
+                    println("Error: " + response.body()?.error)
+                    println("Token: " + response.body()?.token)
+                    println("Name: " + response.body()?.name)
+
+                    println("Response body: " + response.body())
+                    println("Error body: " + response.errorBody().toString())
                 }
 
             })
