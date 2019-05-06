@@ -21,6 +21,7 @@ class Signup : AppCompatActivity() {
     private lateinit var name_in: EditText
     private lateinit var phone_in: EditText
     private lateinit var email_in: EditText
+    private lateinit var username_in: EditText
     private lateinit var password_in: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,6 +31,7 @@ class Signup : AppCompatActivity() {
         name_in = findViewById(R.id.name_in)
         phone_in = findViewById(R.id.phone_in)
         email_in = findViewById(R.id.email_in)
+        username_in = findViewById(R.id.username_in)
         password_in = findViewById(R.id.password_in)
 
         val registration_btn = findViewById<Button>(R.id.registration_btn)
@@ -43,7 +45,7 @@ class Signup : AppCompatActivity() {
         val name = name_in.text.toString().trim()
         val phone = phone_in.text.toString().trim()
         val email = email_in.text.toString().trim()
-        val username = "bjayanta"
+        val username = username_in.text.toString().trim()
         val password = password_in.text.toString().trim()
         val cpassword = password_in.text.toString().trim()
 
