@@ -1,7 +1,9 @@
 package xyz.jayanta.examsystem.activities
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -12,7 +14,6 @@ import retrofit2.Response
 import xyz.jayanta.examsystem.R
 import xyz.jayanta.examsystem.api.RetrofitClient
 import xyz.jayanta.examsystem.models.SignupResponse
-
 
 
 /**
@@ -55,27 +56,32 @@ class Signup : AppCompatActivity() {
             .enqueue(object: Callback<SignupResponse>{
                 override fun onFailure(call: Call<SignupResponse>, t: Throwable) {
                     Toast.makeText(applicationContext, t.message, Toast.LENGTH_LONG).show()
-
                     println(t.message)
+                    println(t.toString())
                 }
 
                 override fun onResponse(call: Call<SignupResponse>, response: Response<SignupResponse>) {
-
                     if(response.isSuccessful()) {
-                        Toast.makeText(applicationContext, "Response: " + response.body()?.message, Toast.LENGTH_LONG).show()
+                        Toast.makeText(applicationContext, "Response: " + response.body()?.msg, Toast.LENGTH_LONG).show()
+
+                        // call dashboard
+                        // val dashboard = Intent(applicationContext, Dashboard::class.java)
+                        // startActivity(dashboard)
                     } else {
-                        // val error = ErrorUtils.parseError(response)
+                        // parse error message
+                        Log.d("response: ", "code = " + response.code())
+                        Log.d("response: ", "body= " + response.body())
+                        Log.d("response: ", response.message().toString())
                     }
 
                     println("Response: " + response.code())
-                    println("Message: " + response.body()?.message)
+                    println("Message: " + response.body()?.msg)
                     println("Success: " + response.body()?.success)
                     println("Error: " + response.body()?.error)
                     println("Token: " + response.body()?.token)
                     println("Name: " + response.body()?.name)
 
                     println("Response body: " + response.body())
-                    println("Error body: " + response.errorBody().toString())
                 }
 
             })
