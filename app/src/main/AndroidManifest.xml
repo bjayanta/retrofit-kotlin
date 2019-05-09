@@ -12,9 +12,11 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true">
+        <activity android:name=".activities.Signin">
+        </activity>
         <activity
-                android:name=".activities.Dashboard"
-                android:label="@string/title_activity_dashboard"
+                android:name=".activities.Userpanel"
+                android:label="@string/title_activity_userpanel"
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity android:name=".activities.Signup">

@@ -15,7 +15,6 @@ import xyz.jayanta.examsystem.R
 import xyz.jayanta.examsystem.api.RetrofitClient
 import xyz.jayanta.examsystem.models.SignupResponse
 
-
 /**
  * Sign Up Activity
  */
@@ -41,6 +40,13 @@ class Signup : AppCompatActivity() {
         registration_btn.setOnClickListener(View.OnClickListener {
             signup()
         })
+
+        val back_btn = findViewById<Button>(R.id.backBtn)
+        back_btn.setOnClickListener(View.OnClickListener {
+            val signin = Intent(this, MainActivity::class.java)
+            startActivity(signin)
+            finish()
+        })
     }
 
     fun signup() {
@@ -56,32 +62,28 @@ class Signup : AppCompatActivity() {
             .enqueue(object: Callback<SignupResponse>{
                 override fun onFailure(call: Call<SignupResponse>, t: Throwable) {
                     Toast.makeText(applicationContext, t.message, Toast.LENGTH_LONG).show()
-                    println(t.message)
-                    println(t.toString())
                 }
 
                 override fun onResponse(call: Call<SignupResponse>, response: Response<SignupResponse>) {
+                    // check response code and response data
+                    Log.d("Response Code: ", response.code().toString())
+                    Log.d("Response Body: ", response.body().toString())
+
+                    // check the response code
                     if(response.isSuccessful()) {
-                        Toast.makeText(applicationContext, "Response: " + response.body()?.msg, Toast.LENGTH_LONG).show()
+                        // show a toast message
+                        Toast.makeText(applicationContext, "Response: " + response.body()?.message, Toast.LENGTH_LONG).show()
 
                         // call dashboard
-                        // val dashboard = Intent(applicationContext, Dashboard::class.java)
-                        // startActivity(dashboard)
+                        val signin = Intent(applicationContext, MainActivity::class.java)
+                        startActivity(signin)
+                        finish()
                     } else {
-                        // parse error message
-                        Log.d("response: ", "code = " + response.code())
-                        Log.d("response: ", "body= " + response.body())
-                        Log.d("response: ", response.message().toString())
+                        var message = "${ response.code().toString() } Unauthorized. Please change the above data and resubmit."
+
+                        // show a toast message for error
+                        Toast.makeText(applicationContext, message, Toast.LENGTH_LONG).show()
                     }
-
-                    println("Response: " + response.code())
-                    println("Message: " + response.body()?.msg)
-                    println("Success: " + response.body()?.success)
-                    println("Error: " + response.body()?.error)
-                    println("Token: " + response.body()?.token)
-                    println("Name: " + response.body()?.name)
-
-                    println("Response body: " + response.body())
                 }
 
             })
